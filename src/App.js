@@ -18,17 +18,29 @@ class App extends Component {
     };
 
     removeFriend = id => {
-
-        let previouslyGuessed = false;
-
+        let previouslyGuessed;
         //get a copy of the array of ids (guessedImages) from this.state
         const guessedImages = this.state.guessedImages;
-        //then push the latest id onto it
-        guessedImages.push(id);
+        //test to see if this new id has been previously clicked
+        if (guessedImages.indexOf(id)===(-1)) {
+            //id has NOT been previously guessed
+            previouslyGuessed = false;            
+            //so push the latest id onto the array of guessed ids
+            guessedImages.push(id);
+        } else {
+            //id has been previously guessed
+            previouslyGuessed = true;
+            //so clear the array of guessed ids and start over
+            guessedImages.length = 0;
+        }
+        
 
         let score = this.state.score;
         if (!previouslyGuessed) {
             score++;
+        }
+        else {
+            score = 0;
         }
 
         const friends = this.state.friends;
